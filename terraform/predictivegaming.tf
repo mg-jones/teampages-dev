@@ -66,7 +66,7 @@ resource "kubernetes_ingress" "predictive-gaming-ingress" {
     }
 
     rule {
-      host = "predictive-gaming.teampages.gg"
+      host "predictive-gaming.teampages.gg"
       http {
         path {
           backend {
@@ -81,4 +81,14 @@ resource "kubernetes_ingress" "predictive-gaming-ingress" {
     }
 
   }
+}
+
+resource "google_dns_record_set" "predictive-gaming-dns" {
+  name = "predictive-gaming.teampages.gg"
+  type = "A"
+  ttl  = 300
+
+  managed_zone = "teampages-prod"
+
+  rrdatas = "ingressIPaddr"
 }
